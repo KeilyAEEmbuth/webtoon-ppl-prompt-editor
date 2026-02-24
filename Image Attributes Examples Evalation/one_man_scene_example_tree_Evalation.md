@@ -1,5 +1,7 @@
 # Image Attributes Example - Mountain Stairway Scene (One Character)
 
+![Rural Market Scene with Overhead View](../images/one_man_scene_example.png)
+
 ## 이미지 설명
 
 산악 계단길에서 한 명의 인물이 지팡이를 짚고 열심히 올라가는 긴장감 있는 액션 장면입니다.
