@@ -1,6 +1,6 @@
 # Image Attributes Example - Mountain Stairway Scene (One Character)
 
-![Rural Market Scene with Overhead View](../images/one_man_scene_example.png)
+![Mountain Stairway Scene with One Character](../images/TreeSource/one_man_scene_example.png)
 
 ## 이미지 설명
 

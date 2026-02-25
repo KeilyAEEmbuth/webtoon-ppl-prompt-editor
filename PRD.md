@@ -15,22 +15,30 @@
 ## 2. 문제 정의 (Problem Definition)
 - 제품 배경:
     - 간접광고(PPL)은 드라마/영화, 유튜브 영상같은 엔터테인먼트 창작물에서 소비자에게 자연스럽게 이미지나 상품을 노출하여 상업적인 마케팅 효과를 내는 방식이다. 이는 원래 실존하는 영상 창작물에서 주로 사용되나 웹툰이나 애니메이션같은 가상 창작물에서도 종종 시도되고 있다. 현대의 생성형 AI 모델, 특히 부분 합성 특화 모델 ‘나노바나나’의 등장은 현실의 상품이나 로고 등을 그림작가가 직접 그려내거나 추가해야 하는 과정을 어느 정도 자동화하고 광고 설계 및 작업의 효율량을 크게 향상시킬 수 있게 되었다.
+    - 다만 현장에서는 여전히 컷당 2~5시간의 합성 리소스가 투입되고, 동일 제품의 반복 배치 요구로 작업량이 2~4배 확대되는 경우가 많다.
 - 현재 문제 상황:
     1. **작업 방식**
         - 수작업에 의존: 웹툰 작가 직접 그리기 또는 Photoshop 같은 이미지 편집 도구 활용
     2. **시간적 비용**
-        - 컷당 평균 4-5시간 소요
+        - 컷당 평균 4-5시간 소요, 피크 시즌에는 2~3시간 추가 소요
     3. **작업량 증가 케이스**
         - 동일한 컷에 대해 5-10개의 배치안 변형 생성 필요
         - 20개의 다양한 컷에 동일한 제품을 반복 배치 필요
-        - 결과: 작업량 3-4배 이상 증가
+        - 결과: 처리량 2~4배 증가, 작업 리드타임 30~60% 증가
     4. **기획 및 수정 요구**
-        - 광고 기획이 웹툰 창작과 별개로 필요
-        - 광고주의 요구사항에 따라 빈번한 수정 및 추가 작업 발생
+        - 광고 기획이 웹툰 창작과 별개로 필요 (기획/합성 사이클 3~6회 반복)
+        - 광고주의 요구사항에 따라 빈번한 수정 및 추가 작업 발생 (수정 라운드 30~50% 증가)
     5. **현황의 핵심 문제**
         - 작업자의 부담 가중
         - 대량 초안 생산 요구 시 효율적 대응 곤란
         - 생성형 AI를 웹툰 PPL 워크플로우에 통합할 체계적 플랫폼 부재
+
+- 정량 지표 기준 (문제의 비용을 수치로 표현):
+    - **작업 시간 비용**: 컷당 합성 작업 시간 n% 증가 또는 n시간 소요
+    - **편집 반복 비용**: 수정 라운드 수 n% 증가, 재작업 비율 n% 발생
+    - **대량 처리 비용**: 동일 제품 반복 배치로 컷 처리량 n배 증가
+    - **커뮤니케이션 비용**: 광고주-작가 피드백 루프 n회 이상 발생
+    - **브랜드 가이드 위반 비용**: 수정 요청률 n% 증가
 
 **[인포그래픽 이미지 프롬프트]**
 > 웹툰 PPL 작업의 현재 문제 상황을 시각화한 인포그래픽을 생성해주세요:
@@ -44,9 +52,9 @@
 > - 스타일: 현대적이고 명확한 비즈니스 인포그래픽 스타일
 
 - 해결해야 할 핵심 Pain Points:
-    - 웹툰 PPL 작업을 작업자(작가)가 직접 작업해서 구현하거나 Photoshop 기반의 수작업으로 이루어짐 → 시간적 비용
-    - 동일한 컷에 대한 여러 결과물 또는 다양한 컷에 같은 제품을 반복적으로 등장시켜야 할 수 있음 → 기존 웹툰과는 다른 대량의 초안 요구
-    - 광고인 만큼 웹툰 자체와 별개인 기획이 필요하며 광고주의 요구에 따라 결과를 유동적으로 변경/추가가 필요할 수 있음 → 작업량 증가
+    - 웹툰 PPL 작업을 작업자(작가)가 직접 작업해서 구현하거나 Photoshop 기반의 수작업으로 이루어짐 → 컷당 4~5시간, 작업 시간 30~60% 증가
+    - 동일한 컷에 대한 여러 결과물 또는 다양한 컷에 같은 제품을 반복적으로 등장시켜야 할 수 있음 → 컷 처리량 2~4배 증가, 시안 생성 5~10개 요구
+    - 광고인 만큼 웹툰 자체와 별개인 기획이 필요하며 광고주의 요구에 따라 결과를 유동적으로 변경/추가가 필요할 수 있음 → 수정 라운드 30~50% 증가, 피드백 루프 3~6회
 - 문제의 비즈니스적/사용자적 영향:
 
 ---
@@ -117,12 +125,12 @@
 
 |  |  |
 | --- | --- |
-| ![Analysis Tree Diagram](./images/market_scene_example.png) | ![Analysis Tree Diagram](./images/AnalysisTree_diagram.png) |
+| ![Analysis Tree Diagram](./images/PRD/market_scene_example.png) | ![Analysis Tree Diagram](./images/PRD/AnalysisTree_diagram.png) |
 
 ### 4.2 DAG 기반 이미지 편집 의사결정 모델 (후순위)
 |  |  |
 | --- | --- |
-| ![Rural Market Scene with Overhead View - Basic](./images/DAG_tree_basic.png) | ![Rural Market Scene with Overhead View - Detail](./images/DAG_tree_detail.png) |
+| ![Rural Market Scene with Overhead View - Basic](./images/PRD/DAG_tree_basic.png) | ![Rural Market Scene with Overhead View - Detail](./images/PRD/DAG_tree_detail.png) |
 
 - 핵심 개념 정의: 특정 milestone 목표를 달성하기 위해, 후보 결과를 다중 분기/병렬로 탐색하는 편집 의사결정 그래프
 - 작업 프로세스
@@ -284,15 +292,15 @@
 ### 1. 메인화면
 |  |  |  |
 | --- | --- | --- |
-| ![Webpage Main example](./images/UI_MAIN1.png) | ![Webpage Main example](./images/UI_MAIN2.png) | ![Webpage Main example](./images/UI_MAIN3.png) |
+| ![Webpage Main example](./images/PRD/UI_MAIN1.png) | ![Webpage Main example](./images/PRD/UI_MAIN2.png) | ![Webpage Main example](./images/PRD/UI_MAIN3.png) |
 ---
 ### 2. 작업화면
 |  |  |  |
 | --- | --- | --- |
-| ![Project view example](./images/UI_workflow.png) | ![Project view example](./images/UI_workflow2.png) | ![Project view example](./images/UI_workflow3.png) |
+| ![Project view example](./images/PRD/UI_workflow.png) | ![Project view example](./images/PRD/UI_workflow2.png) | ![Project view example](./images/PRD/UI_workflow3.png) |
 ---
 ### 3. DAG 프로세스
 |  |  |  |
 | --- | --- | --- |
-| ![DAG process example](./images/UI_DAG1.png) | ![DAG process example](./images/UI_DAG2.png) | ![DAG process example](./images/UI_DAG3.png) |
+| ![DAG process example](./images/PRD/UI_DAG1.png) | ![DAG process example](./images/PRD/UI_DAG2.png) | ![DAG process example](./images/PRD/UI_DAG3.png) |
 ---
