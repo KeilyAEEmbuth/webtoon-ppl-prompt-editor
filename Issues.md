@@ -121,6 +121,7 @@
 - [ ] UI 구조: 이미지 트리 왼쪽 고정 배치
 - [ ] 용어 정제: Asset 대체 용어 선택 및 일괄 치환
 - [v] 용어 정제: Comics ontology → 권위 구조 참조
+    -> visual genome dataset 레퍼런스로 대체 가능성 연구
 - [ ] 기술 스택: React + Shadcn UI / React Flow 검토
 
 ## [C] 핵심 피드백 (장기 과제)
